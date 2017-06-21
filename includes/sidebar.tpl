@@ -17,16 +17,25 @@
             <div class="list-group{if $item->getChildrenAttribute('class')} {$item->getChildrenAttribute('class')}{/if}">
                 {foreach $item->getChildren() as $childItem}
                     {if $childItem->getUri()}
-                        <a menuItemName="{$childItem->getName()}" href="{$childItem->getUri()}" class="list-group-item{if $childItem->isDisabled()} disabled{/if}{if $childItem->getClass()} {$childItem->getClass()}{/if}{if $childItem->isCurrent()} active{/if}"{if $childItem->getAttribute('dataToggleTab')} data-toggle="tab"{/if}{if $childItem->getAttribute('target')} target="{$childItem->getAttribute('target')}"{/if} id="{$childItem->getId()}">
+                        {if $childItem->getName() neq "Order New Services" && $childItem->getName() neq "Register New Domain"
+                        && $childItem->getName() neq "Register a New Domain" && $childItem->getName() neq "Renew Domain"
+                        && $childItem->getName() neq "Transfer in a Domain" && $childItem->getName() neq "Cancel"
+                        && $childItem->getName() neq "Place a New Order" && $childItem->getName() neq "View Available Addons"
+                        && $childItem->getName() neq "Billing Information" && $childItem->getName() neq "Contacts/Sub-Accounts"
+                        && $childItem->getName() neq "Email History" && $childItem->getName() neq "Domain Addons"}
+                            <a menuItemName="{$childItem->getName()}" href="{$childItem->getUri()}" class="list-group-item{if $childItem->isDisabled()} disabled{/if}{if $childItem->getClass()} {$childItem->getClass()}{/if}{if $childItem->isCurrent()} active{/if}"{if $childItem->getAttribute('dataToggleTab')} data-toggle="tab"{/if}{if $childItem->getAttribute('target')} target="{$childItem->getAttribute('target')}"{/if} id="{$childItem->getId()}">
                             {if $childItem->hasBadge()}<span class="badge">{$childItem->getBadge()}</span>{/if}
-                            {if $childItem->hasIcon()}<i class="{$childItem->getIcon()}"></i>&nbsp;{/if}
-                            {$childItem->getLabel()}
-                        </a>
+                                {if $childItem->hasIcon()}<i class="{$childItem->getIcon()}"></i>&nbsp;{/if}
+                                {$childItem->getLabel()}
+                                {if $childItem->hasBadge()}&nbsp;<span class="badge">{$childItem->getBadge()}</span>{/if}
+                            </a>
+                        {/if}
                     {else}
                         <div menuItemName="{$childItem->getName()}" class="list-group-item{if $childItem->getClass()} {$childItem->getClass()}{/if}" id="{$childItem->getId()}">
                             {if $childItem->hasBadge()}<span class="badge">{$childItem->getBadge()}</span>{/if}
                             {if $childItem->hasIcon()}<i class="{$childItem->getIcon()}"></i>&nbsp;{/if}
                             {$childItem->getLabel()}
+                            {if $childItem->hasBadge()}&nbsp;<span class="badge">{$childItem->getBadge()}</span>{/if}
                         </div>
                     {/if}
                 {/foreach}
@@ -52,10 +61,17 @@
                 <form role="form">
                     <select class="form-control" onchange="selectChangeNavigate(this)">
                         {foreach $item->getChildren() as $childItem}
-                            <option menuItemName="{$childItem->getName()}" value="{$childItem->getUri()}" class="list-group-item" {if $childItem->isCurrent()}selected="selected"{/if}>
-                                {$childItem->getLabel()}
-                                {if $childItem->hasBadge()}({$childItem->getBadge()}){/if}
-                            </option>
+                            {if $childItem->getName() neq "Order New Services" && $childItem->getName() neq "Register New Domain"
+                            && $childItem->getName() neq "Register a New Domain" && $childItem->getName() neq "Renew Domain"
+                            && $childItem->getName() neq "Transfer in a Domain" && $childItem->getName() neq "Cancel"
+                            && $childItem->getName() neq "Place a New Order" && $childItem->getName() neq "View Available Addons"
+                            && $childItem->getName() neq "Billing Information" && $childItem->getName() neq "Contacts/Sub-Accounts"
+                            && $childItem->getName() neq "Email History" && $childItem->getName() neq "Domain Addons"}
+                                <option menuItemName="{$childItem->getName()}" value="{$childItem->getUri()}" class="list-group-item" {if $childItem->isCurrent()}selected="selected"{/if}>
+                                    {$childItem->getLabel()}
+                                    {if $childItem->hasBadge()}({$childItem->getBadge()}){/if}
+                                </option>
+                            {/if}
                         {/foreach}
                     </select>
                 </form>

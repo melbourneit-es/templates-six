@@ -13,12 +13,12 @@ var stateNotRequired = true;
             <label for="inputContactId" class="col-sm-3 control-label">{$LANG.clientareachoosecontact}</label>
             <div class="col-sm-6">
                 <select name="contactid" id="inputContactId" onchange="submit()" class="form-control">
-                    {foreach item=contact from=$contacts}
-                        <option value="{$contact.id}">{$contact.name} - {$contact.email}</option>
-                    {/foreach}
-                    <option value="new" selected="selected">{$LANG.clientareanavaddcontact}</option>
-                </select>
-            </div>
+                {foreach item=contact from=$contacts}
+                    <option value="{$contact.id}">{$contact.name} - {$contact.email}</option>
+                {/foreach}
+                <option value="new" selected="selected">{$LANG.clientareanavaddcontact}</option>
+            </select>
+        </div>
             <div class="col-sm-2 hidden-xs">
                 <button type="submit" class="btn btn-default btn-block">{$LANG.go}</button>
             </div>
@@ -106,14 +106,14 @@ var stateNotRequired = true;
             <label class="full control-label">{$LANG.subaccountpermissions}</label>
             <div class="checkbox clearfix">
                 {foreach $allPermissions as $permission}
-                    <div class="col-sm-6">
-                        <label>
+                <div class="col-sm-6">
+                    <label>
                             <input type="checkbox" name="permissions[]" value="{$permission}"{if in_array($permission, $permissions)} checked{/if} />
                             <span>
                                 {assign var='langPermission' value='subaccountperms'|cat:$permission}{$LANG.$langPermission}
                             </span>
-                        </label>
-                    </div>
+                    </label>
+                </div>
                 {/foreach}
             </div>
         </div>
@@ -139,7 +139,7 @@ var stateNotRequired = true;
 
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="display: none;">
         <label class="control-label">{$LANG.clientareacontactsemails}</label>
         <div class="controls checkbox">
             <label>
@@ -169,9 +169,9 @@ var stateNotRequired = true;
         </div>
     </div>
 
-    <div class="form-group text-center">
-        <input class="btn btn-primary" type="submit" name="save" value="{$LANG.clientareasavechanges}" />
-        <input class="btn btn-default" type="reset" value="{$LANG.cancel}" />
-    </div>
+        <div class="form-group text-center">
+            <input class="btn btn-primary" type="submit" name="save" value="{$LANG.clientareasavechanges}" />
+            <input class="btn btn-default" type="reset" value="{$LANG.cancel}" />
+        </div>
 
 </form>

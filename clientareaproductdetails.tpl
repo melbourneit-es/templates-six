@@ -43,11 +43,6 @@
                                         <a href="upgrade.php?type=package&amp;id={$id}" class="btn btn-block btn-success">{$LANG.upgrade}</a>
                                     </div>
                                 {/if}
-                                {if $showcancelbutton}
-                                    <div class="col-xs-{if $packagesupgrade}6{else}12{/if}">
-                                        <a href="clientarea.php?action=cancel&amp;id={$id}" class="btn btn-block btn-danger {if $pendingcancellation}disabled{/if}">{if $pendingcancellation}{$LANG.cancellationrequested}{else}{$LANG.clientareacancelrequestbutton}{/if}</a>
-                                    </div>
-                                {/if}
                             </div>
                         {/if}
 
@@ -57,24 +52,8 @@
                         <h4>{$LANG.clientareahostingregdate}</h4>
                         {$regdate}
 
-                        {if $firstpaymentamount neq $recurringamount}
-                            <h4>{$LANG.firstpaymentamount}</h4>
-                            {$firstpaymentamount}
-                        {/if}
-
-                        {if $billingcycle != $LANG.orderpaymenttermonetime && $billingcycle != $LANG.orderfree}
-                            <h4>{$LANG.recurringamount}</h4>
-                            {$recurringamount}
-                        {/if}
-
-                        <h4>{$LANG.orderbillingcycle}</h4>
-                        {$billingcycle}
-
                         <h4>{$LANG.clientareahostingnextduedate}</h4>
                         {$nextduedate}
-
-                        <h4>{$LANG.orderpaymentmethod}</h4>
-                        {$paymentmethod}
 
                         {if $suspendreason}
                             <h4>{$LANG.suspendreason}</h4>
@@ -291,9 +270,9 @@
 
                             <script src="{$BASE_PATH_JS}/jquery.knob.js"></script>
                             <script type="text/javascript">
-                            jQuery(function() {ldelim}
-                                jQuery(".dial-usage").knob({ldelim}'format':function (v) {ldelim} alert(v); {rdelim}{rdelim});
-                            {rdelim});
+                                jQuery(function() {ldelim}
+                                    jQuery(".dial-usage").knob({ldelim}'format':function (v) {ldelim} alert(v); {rdelim}{rdelim});
+                                    {rdelim});
                             </script>
                         </div>
                     {/if}
@@ -304,109 +283,100 @@
                 jQuery('.nav-tabs-overflow').tabdrop();
             </script>
 
-        {/if}
-
-    </div>
-    <div class="tab-pane fade in" id="tabDownloads">
-
-        <h3>{$LANG.downloadstitle}</h3>
-
-        {include file="$template/includes/alert.tpl" type="info" msg="{lang key="clientAreaProductDownloadsAvailable"}" textcenter=true}
-
-        <div class="row">
-            {foreach from=$downloads item=download}
-                <div class="col-xs-10 col-xs-offset-1">
-                    <h4>{$download.title}</h4>
-                    <p>
-                        {$download.description}
-                    </p>
-                    <p>
-                        <a href="{$download.link}" class="btn btn-default"><i class="fa fa-download"></i> {$LANG.downloadname}</a>
-                    </p>
-                </div>
-            {/foreach}
-        </div>
-
-    </div>
-    <div class="tab-pane fade in" id="tabAddons">
-
-        <h3>{$LANG.clientareahostingaddons}</h3>
-
-        {if $addonsavailable}
-            {include file="$template/includes/alert.tpl" type="info" msg="{lang key="clientAreaProductAddonsAvailable"}" textcenter=true}
-        {/if}
-
-        <div class="row">
-            {foreach from=$addons item=addon}
-                <div class="col-xs-10 col-xs-offset-1">
-                    <div class="panel panel-default panel-accent-blue">
-                        <div class="panel-heading">
-                            {$addon.name}
-                            <div class="pull-right status-{$addon.rawstatus|strtolower}">{$addon.status}</div>
-                        </div>
-                        <div class="row panel-body">
-                            <div class="col-md-6">
-                                <p>
-                                    {$addon.pricing}
-                                </p>
-                                <p>
-                                    {$LANG.registered}: {$addon.regdate}
-                                </p>
-                                <p>
-                                    {$LANG.clientareahostingnextduedate}: {$addon.nextduedate}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="panel-footer">
-                            {$addon.managementActions}
-                        </div>
-                    </div>
-                </div>
-            {/foreach}
-        </div>
-
-    </div>
-    <div class="tab-pane fade in" id="tabChangepw">
-
-        <h3>{$LANG.serverchangepassword}</h3>
-
-        {if $modulechangepwresult}
-            {if $modulechangepwresult == "success"}
-                {include file="$template/includes/alert.tpl" type="success" msg=$modulechangepasswordmessage textcenter=true}
-            {elseif $modulechangepwresult == "error"}
-                {include file="$template/includes/alert.tpl" type="error" msg=$modulechangepasswordmessage|strip_tags textcenter=true}
             {/if}
-        {/if}
 
-        <form class="form-horizontal using-password-strength" method="post" action="{$smarty.server.PHP_SELF}?action=productdetails#tabChangepw" role="form">
-            <input type="hidden" name="id" value="{$id}" />
-            <input type="hidden" name="modulechangepassword" value="true" />
+        </div>
+        <div class="tab-pane fade in" id="tabDownloads">
 
-            <div id="newPassword1" class="form-group has-feedback">
-                <label for="inputNewPassword1" class="col-sm-5 control-label">{$LANG.newpassword}</label>
-                <div class="col-sm-6">
-                    <input type="password" class="form-control" id="inputNewPassword1" name="newpw" autocomplete="off" />
-                    <span class="form-control-feedback glyphicon"></span>
-                    {include file="$template/includes/pwstrength.tpl"}
-                </div>
+            <h3>{$LANG.downloadstitle}</h3>
+
+            {include file="$template/includes/alert.tpl" type="info" msg="{lang key="clientAreaProductDownloadsAvailable"}" textcenter=true}
+
+            <div class="row">
+                {foreach from=$downloads item=download}
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <h4>{$download.title}</h4>
+                        <p>
+                            {$download.description}
+                        </p>
+                        <p>
+                            <a href="{$download.link}" class="btn btn-default"><i class="fa fa-download"></i> {$LANG.downloadname}</a>
+                        </p>
+                    </div>
+                {/foreach}
             </div>
-            <div id="newPassword2" class="form-group has-feedback">
-                <label for="inputNewPassword2" class="col-sm-5 control-label">{$LANG.confirmnewpassword}</label>
-                <div class="col-sm-6">
-                    <input type="password" class="form-control" id="inputNewPassword2" name="confirmpw" autocomplete="off" />
-                    <span class="form-control-feedback glyphicon"></span>
-                    <div id="inputNewPassword2Msg">
+
+        </div>
+        <div class="tab-pane fade in" id="tabAddons">
+
+            <h3>{$LANG.clientareahostingaddons}</h3>
+
+            {if $addonsavailable}
+                {include file="$template/includes/alert.tpl" type="info" msg="{lang key="clientAreaProductAddonsAvailable"}" textcenter=true}
+            {/if}
+
+            <div class="row">
+                {foreach from=$addons item=addon}
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <h4>{$addon.name}</h4>
+                        <p>
+                            {$addon.pricing}
+                        </p>
+                        <p>
+                            {$LANG.registered}: {$addon.regdate}
+                        </p>
+                        <p>
+                            {$LANG.clientareahostingnextduedate}: {$addon.nextduedate}
+                        </p>
+                        <p>
+                            <span class="label status-{$addon.status|strtolower}">{$addon.status}</span>
+                        </p>
+                    </div>
+                {/foreach}
+            </div>
+
+        </div>
+        <div class="tab-pane fade in" id="tabChangepw">
+
+            <h3>{$LANG.serverchangepassword}</h3>
+
+            {if $modulechangepwresult}
+                {if $modulechangepwresult == "success"}
+                    {include file="$template/includes/alert.tpl" type="success" msg=$modulechangepasswordmessage textcenter=true}
+                {elseif $modulechangepwresult == "error"}
+                    {include file="$template/includes/alert.tpl" type="error" msg=$modulechangepasswordmessage|strip_tags textcenter=true}
+                {/if}
+            {/if}
+
+            <form class="form-horizontal using-password-strength" method="post" action="{$smarty.server.PHP_SELF}?action=productdetails#tabChangepw" role="form">
+                <input type="hidden" name="id" value="{$id}" />
+                <input type="hidden" name="modulechangepassword" value="true" />
+
+                <div id="newPassword1" class="form-group has-feedback">
+                    <label for="inputNewPassword1" class="col-sm-5 control-label">{$LANG.newpassword}</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control" id="inputNewPassword1" name="newpw" />
+                        <span class="form-control-feedback glyphicon"></span>
+                        {include file="$template/includes/pwstrength.tpl"}
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-6 col-sm-6">
-                    <input class="btn btn-primary" type="submit" value="{$LANG.clientareasavechanges}" />
-                    <input class="btn" type="reset" value="{$LANG.cancel}" />
+                <div id="newPassword2" class="form-group has-feedback">
+                    <label for="inputNewPassword2" class="col-sm-5 control-label">{$LANG.confirmnewpassword}</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control" id="inputNewPassword2" name="confirmpw" />
+                        <span class="form-control-feedback glyphicon"></span>
+                        <div id="inputNewPassword2Msg">
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-6 col-sm-6">
+                        <input class="btn btn-primary" type="submit" value="{$LANG.clientareasavechanges}" />
+                        <input class="btn" type="reset" value="{$LANG.cancel}" />
+                    </div>
+                </div>
 
-        </form>
+            </form>
 
+        </div>
     </div>
-</div>
