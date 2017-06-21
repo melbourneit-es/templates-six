@@ -36,47 +36,39 @@
                 </li>
             {/if}
             {if $loggedin}
-                <li>
-                    <a href="#" data-toggle="popover" id="accountNotifications" data-placement="bottom">
-                        {$LANG.notifications}
-                        {if count($clientAlerts) > 0}<span class="label label-info">NEW</span>{/if}
-                        <b class="caret"></b>
-                    </a>
-                    <div id="accountNotificationsContent" class="hidden">
-                        <ul class="client-alerts">
-                        {foreach $clientAlerts as $alert}
-                            <li>
-                                <a href="{$alert->getLink()}">
-                                    <i class="fa fa-fw fa-{if $alert->getSeverity() == 'danger'}exclamation-circle{elseif $alert->getSeverity() == 'warning'}warning{elseif $alert->getSeverity() == 'info'}info-circle{else}check-circle{/if}"></i>
-                                    <div class="message">{$alert->getMessage()}</div>
-                                </a>
-                            </li>
-                        {foreachelse}
-                            <li class="none">
-                                {$LANG.notificationsnone}
-                            </li>
-                        {/foreach}
-                        </ul>
-                    </div>
-                </li>
-                <li class="primary-action">
-                    <a href="{$WEB_ROOT}/logout.php" class="btn btn-action">
-                        {$LANG.clientareanavlogout}
-                    </a>
-                </li>
+                <div class="hidden">
+                    <li>
+                        <a href="#" data-toggle="popover" id="accountNotifications" data-placement="bottom">
+                            {$LANG.notifications}
+                            {if count($clientAlerts) > 0}<span class="label label-info">NEW</span>{/if}
+                            <b class="caret"></b>
+                        </a>
+                        <div id="accountNotificationsContent" class="hidden">
+                            <ul class="client-alerts">
+                            {foreach $clientAlerts as $alert}
+                                <li>
+                                    <a href="{$alert->getLink()}">
+                                        <i class="fa fa-fw fa-{if $alert->getSeverity() == 'danger'}exclamation-circle{elseif $alert->getSeverity() == 'warning'}warning{elseif $alert->getSeverity() == 'info'}info-circle{else}check-circle{/if}"></i>
+                                        <div class="message">{$alert->getMessage()}</div>
+                                    </a>
+                                </li>
+                            {foreachelse}
+                                <li class="none">
+                                    {$LANG.notificationsnone}
+                                </li>
+                            {/foreach}
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="primary-action">
+                        <a href="{$WEB_ROOT}/logout.php" class="btn btn-action">
+                            {$LANG.clientareanavlogout}
+                        </a>
+                    </li>
+                </div>
             {else}
                 <li>
                     <a href="{$WEB_ROOT}/clientarea.php">{$LANG.login}</a>
-                </li>
-                {if $condlinks.allowClientRegistration}
-                    <li>
-                        <a href="{$WEB_ROOT}/register.php">{$LANG.register}</a>
-                    </li>
-                {/if}
-                <li class="primary-action">
-                    <a href="{$WEB_ROOT}/cart.php?a=view" class="btn btn-action">
-                        {$LANG.viewcart}
-                    </a>
                 </li>
             {/if}
             {if $adminMasqueradingAsClient || $adminLoggedIn}
@@ -146,9 +138,6 @@
                                     {if $registerdomainenabled}
                                         <input type="submit" class="btn search" value="{$LANG.search}" />
                                     {/if}
-                                    {if $transferdomainenabled}
-                                        <input type="submit" name="transfer" class="btn transfer" value="{$LANG.domainstransfer}" />
-                                    {/if}
                                 </span>
                             </div>
                         </div>
@@ -161,55 +150,6 @@
             {/if}
         </div>
     </section>
-    <div class="home-shortcuts">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 hidden-sm hidden-xs text-center">
-                    <p class="lead">
-                        {$LANG.howcanwehelp}
-                    </p>
-                </div>
-                <div class="col-sm-12 col-md-8">
-                    <ul>
-                        {if $registerdomainenabled || $transferdomainenabled}
-                            <li>
-                                <a id="btnBuyADomain" href="domainchecker.php">
-                                    <i class="fa fa-globe"></i>
-                                    <p>
-                                        {$LANG.buyadomain} <span>&raquo;</span>
-                                    </p>
-                                </a>
-                            </li>
-                        {/if}
-                        <li>
-                            <a id="btnOrderHosting" href="cart.php">
-                                <i class="fa fa-hdd-o"></i>
-                                <p>
-                                    {$LANG.orderhosting} <span>&raquo;</span>
-                                </p>
-                            </a>
-                        </li>
-                        <li>
-                            <a id="btnMakePayment" href="clientarea.php">
-                                <i class="fa fa-credit-card"></i>
-                                <p>
-                                    {$LANG.makepayment} <span>&raquo;</span>
-                                </p>
-                            </a>
-                        </li>
-                        <li>
-                            <a id="btnGetSupport" href="submitticket.php">
-                                <i class="fa fa-envelope-o"></i>
-                                <p>
-                                    {$LANG.getsupport} <span>&raquo;</span>
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 {/if}
 
 {include file="$template/includes/verifyemail.tpl"}

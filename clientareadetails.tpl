@@ -74,22 +74,22 @@
         </div>
         <div class="col-sm-6 col-xs-12 pull-left">
 
-            <div class="form-group">
+            <div class="form-group" style="display: none;">
                 <label for="inputPaymentMethod" class="control-label">{$LANG.paymentmethod}</label>
                 <select name="paymentmethod" id="inputPaymentMethod" class="form-control">
                     <option value="none">{$LANG.paymentmethoddefault}</option>
                     {foreach from=$paymentmethods item=method}
-                    <option value="{$method.sysname}"{if $method.sysname eq $defaultpaymentmethod} selected="selected"{/if}>{$method.name}</option>
+                        <option value="{$method.sysname}"{if $method.sysname eq $defaultpaymentmethod} selected="selected"{/if}>{$method.name}</option>
                     {/foreach}
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="display: none;">
                 <label for="inputBillingContact" class="control-label">{$LANG.defaultbillingcontact}</label>
                 <select name="billingcid" id="inputBillingContact" class="form-control">
                     <option value="0">{$LANG.usedefaultcontact}</option>
                     {foreach from=$contacts item=contact}
-                    <option value="{$contact.id}"{if $contact.id eq $billingcid} selected="selected"{/if}>{$contact.name}</option>
+                        <option value="{$contact.id}"{if $contact.id eq $billingcid} selected="selected"{/if}>{$contact.name}</option>
                     {/foreach}
                 </select>
             </div>
@@ -106,14 +106,14 @@
             {/if}
 
             {if $emailoptoutenabled}
-            <div class="form-group">
-                <label class="control-label" for="inputEmailOptOut">{$LANG.emailoptout}</label>
-                <div class="controls checkbox">
-                    <label>
-                        <input type="checkbox" value="1" name="emailoptout" id="inputEmailOptOut" {if $emailoptout} checked{/if} /> {$LANG.emailoptoutdesc}
-                    </label>
+                <div class="form-group">
+                    <label class="control-label" for="inputEmailOptOut">{$LANG.emailoptout}</label>
+                    <div class="controls checkbox">
+                        <label>
+                            <input type="checkbox" value="1" name="emailoptout" id="inputEmailOptOut" {if $emailoptout} checked{/if} /> {$LANG.emailoptoutdesc}
+                        </label>
+                    </div>
                 </div>
-            </div>
             {/if}
 
         </div>

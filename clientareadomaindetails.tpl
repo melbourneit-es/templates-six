@@ -24,24 +24,15 @@
             <div class="col-sm-offset-1 col-sm-5">
                 <h4><strong>{$LANG.clientareahostingdomain}:</strong></h4> <a href="http://{$domain}" target="_blank">{$domain}</a>
             </div>
-            <div class="col-sm-5">
-                <h4><strong>{$LANG.firstpaymentamount}:</strong></h4> <span>{$firstpaymentamount}</span>
-            </div>
         </div>
         <div class="row">
             <div class="col-sm-offset-1 col-sm-5">
                 <h4><strong>{$LANG.clientareahostingregdate}:</strong></h4> <span>{$registrationdate}</span>
             </div>
-            <div class="col-sm-6">
-                <h4><strong>{$LANG.recurringamount}:</strong></h4> {$recurringamount} {$LANG.every} {$registrationperiod} {$LANG.orderyears}
-            </div>
         </div>
         <div class="row">
             <div class="col-sm-offset-1 col-sm-5">
                 <h4><strong>{$LANG.clientareahostingnextduedate}:</strong></h4> {$nextduedate}
-            </div>
-            <div class="col-sm-6">
-                <h4><strong>{$LANG.orderpaymentmethod}:</strong></h4> {$paymentmethod}
             </div>
         </div>
         <div class="row">
@@ -96,13 +87,6 @@
                         </a>
                     </li>
                 {/if}
-                {if $renew}
-                    <li>
-                        <a href="cart.php?gid=renewals">
-                            {$LANG.renewYourDomain}
-                        </a>
-                    </li>
-                {/if}
             </ul>
 
         {/if}
@@ -121,25 +105,6 @@
         <br />
 
         <h2 class="text-center">{$LANG.domainautorenewstatus}: <span class="label label-{if $autorenew}success{else}danger{/if}">{if $autorenew}{$LANG.domainsautorenewenabled}{else}{$LANG.domainsautorenewdisabled}{/if}</span></h2>
-
-        <br />
-        <br />
-
-        <form method="post" action="{$smarty.server.PHP_SELF}?action=domaindetails#tabAutorenew">
-            <input type="hidden" name="id" value="{$domainid}">
-            <input type="hidden" name="sub" value="autorenew" />
-            {if $autorenew}
-                <input type="hidden" name="autorenew" value="disable">
-                <p class="text-center">
-                    <input type="submit" class="btn btn-lg btn-danger" value="{$LANG.domainsautorenewdisable}" />
-                </p>
-            {else}
-                <input type="hidden" name="autorenew" value="enable">
-                <p class="text-center">
-                    <input type="submit" class="btn btn-lg btn-success" value="{$LANG.domainsautorenewenable}" />
-                </p>
-            {/if}
-        </form>
 
     </div>
     <div class="tab-pane fade" id="tabNameservers">
@@ -265,13 +230,13 @@
                     {$LANG.domainaddonsidprotectioninfo}<br />
                     <form action="clientarea.php?action=domainaddons" method="post">
                         <input type="hidden" name="id" value="{$domainid}"/>
-                        {if $addonstatus.idprotection}
+                    {if $addonstatus.idprotection}
                             <input type="hidden" name="disable" value="idprotect"/>
                             <input type="submit" value="{$LANG.disable}" class="btn btn-danger"/>
-                        {else}
+                    {else}
                             <input type="hidden" name="buy" value="idprotect"/>
                             <input type="submit" value="{$LANG.domainaddonsbuynow} {$addonspricing.idprotection}" class="btn btn-success"/>
-                        {/if}
+                    {/if}
                     </form>
                 </div>
             </div>
@@ -286,13 +251,13 @@
                     {$LANG.domainaddonsdnsmanagementinfo}<br />
                     <form action="clientarea.php?action=domainaddons" method="post">
                         <input type="hidden" name="id" value="{$domainid}"/>
-                        {if $addonstatus.dnsmanagement}
+                    {if $addonstatus.dnsmanagement}
                             <input type="hidden" name="disable" value="dnsmanagement"/>
                             <a class="btn btn-success" href="clientarea.php?action=domaindns&domainid={$domainid}">{$LANG.manage}</a> <input type="submit" value="{$LANG.disable}" class="btn btn-danger"/>
-                        {else}
+                    {else}
                             <input type="hidden" name="buy" value="dnsmanagement"/>
                             <input type="submit" value="{$LANG.domainaddonsbuynow} {$addonspricing.dnsmanagement}" class="btn btn-success"/>
-                        {/if}
+                    {/if}
                     </form>
                 </div>
             </div>
@@ -307,13 +272,13 @@
                     {$LANG.domainaddonsemailforwardinginfo}<br />
                     <form action="clientarea.php?action=domainaddons" method="post">
                         <input type="hidden" name="id" value="{$domainid}"/>
-                        {if $addonstatus.emailforwarding}
+                    {if $addonstatus.emailforwarding}
                             <input type="hidden" name="disable" value="emailfwd"/>
                             <a class="btn btn-success" href="clientarea.php?action=domainemailforwarding&domainid={$domainid}">{$LANG.manage}</a> <input type="submit" value="{$LANG.disable}" class="btn btn-danger"/>
-                        {else}
+                    {else}
                             <input type="hidden" name="buy" value="emailfwd"/>
                             <input type="submit" value="{$LANG.domainaddonsbuynow} {$addonspricing.emailforwarding}" class="btn btn-success"/>
-                        {/if}
+                    {/if}
                     </form>
                 </div>
             </div>

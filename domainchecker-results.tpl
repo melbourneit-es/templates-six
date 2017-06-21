@@ -29,21 +29,54 @@
             </div>
             <table class="table table-curved table-hover" id="searchResults">
                 <tbody>
-                    {if $searchResults}
-                        <tr>
-                            <td><strong>{$searchResults.domainName}</strong></td>
-                            <td class="text-center">
+                {if $searchResults}
+                    <tr>
+                        <td><strong>{$searchResults.domainName}</strong></td>
+                        <td class="text-center">
                                 {if $searchResults.status == 'reserved'}
                                     <span class="label label-success">{$LANG.domainreserved}</span>
                                 {else}
                                     <span class="label label-success">{$LANG.domaincheckeravailable}</span>
                                 {/if}
-                            </td>
-                            <td class="text-center">
-                                {$searchResults.shortestPeriod.register}
-                            </td>
-                            <td class="text-center">
-                                {if count($searchResults.pricing) == 1}
+                        </td>
+                    </tr>
+                {/if}
+                {foreach $bulkCheckResults as $result}
+                    <tr>
+                        <td><strong>{$result.domainName}</strong></td>
+                        <td class="text-center">
+                            {if $searchingFor == 'register'}
+                                {if $result.isAvailable}
+                                        {if $result.status == 'reserved'}
+                                            <span class="label label-success">{$LANG.domainreserved}</span>
+                                        {else}
+                                    <span class="label label-success">{$LANG.domaincheckeravailable}</span>
+                                        {/if}
+                                {elseif $result.isRegistered}
+                                    <span class="label label-danger">{$LANG.domaincheckertaken}</span>
+                                {else}
+                                    <span class="label label-danger">Status Unknown</span>
+                                {/if}
+                            {else}
+                                {if $result.isRegistered}
+                                    <span class="label label-success">{$LANG.domaincheckertransferable}</span>
+                                {elseif $result.isAvailable}
+                                    <span class="label label-danger">Not Registered</span>
+                                {else}
+                                    <span class="label label-danger">Status Unknown</span>
+                                {/if}
+                            {/if}
+                        </td>
+                        <td class="text-center">
+                            {if ($searchingFor == 'register' && $result.isAvailable)}
+                                {$result.shortestPeriod.register}
+                            {elseif ($searchingFor == 'transfer' && $result.isRegistered)}
+                                {$result.shortestPeriod.transfer}
+                            {/if}
+                        </td>
+                        <td class="text-right">
+                            {if ($searchingFor == 'register' && $result.isAvailable)}
+                                {if count($result.pricing) == 1}
                                     <button type="button" onclick="addToCart(this, false, 'register')" class="btn btn-primary btn-sm">
                                         <span class="glyphicon glyphicon-shopping-cart"></span>
                                         {$LANG.addtocart}
@@ -57,11 +90,11 @@
                                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle additional-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <b class="caret"></b>
                                             <span class="sr-only">
-                                                {lang key="domainChecker.additionalPricingOptions" domain=$searchResults.domainName}
+                                                {lang key="domainChecker.additionalPricingOptions" domain=$result.domainName}
                                             </span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            {foreach $searchResults.pricing as $years => $price}
+                                            {foreach $result.pricing as $years => $price}
                                                 {if $price@iteration eq 1}
                                                     {* Don't output the first as this is default *}
                                                     {continue}
@@ -75,88 +108,18 @@
                                         </ul>
                                     </div>
                                 {/if}
-                            </td>
-                        </tr>
-                    {/if}
-                    {foreach $bulkCheckResults as $result}
-                        <tr>
-                            <td><strong>{$result.domainName}</strong></td>
-                            <td class="text-center">
-                                {if $searchingFor == 'register'}
-                                    {if $result.isAvailable}
-                                        {if $result.status == 'reserved'}
-                                            <span class="label label-success">{$LANG.domainreserved}</span>
-                                        {else}
-                                            <span class="label label-success">{$LANG.domaincheckeravailable}</span>
-                                        {/if}
-                                    {elseif $result.isRegistered}
-                                        <span class="label label-danger">{$LANG.domaincheckertaken}</span>
-                                    {else}
-                                        <span class="label label-danger">Status Unknown</span>
-                                    {/if}
-                                {else}
-                                    {if $result.isRegistered}
-                                        <span class="label label-success">{$LANG.domaincheckertransferable}</span>
-                                    {elseif $result.isAvailable}
-                                        <span class="label label-danger">Not Registered</span>
-                                    {else}
-                                        <span class="label label-danger">Status Unknown</span>
-                                    {/if}
-                                {/if}
-                            </td>
-                            <td class="text-center">
-                                {if ($searchingFor == 'register' && $result.isAvailable)}
-                                    {$result.shortestPeriod.register}
-                                {elseif ($searchingFor == 'transfer' && $result.isRegistered)}
-                                    {$result.shortestPeriod.transfer}
-                                {/if}
-                            </td>
-                            <td class="text-right">
-                                {if ($searchingFor == 'register' && $result.isAvailable)}
-                                    {if count($result.pricing) == 1}
-                                        <button type="button" onclick="addToCart(this, false, 'register')" class="btn btn-primary btn-sm">
-                                            <span class="glyphicon glyphicon-shopping-cart"></span>
-                                            {$LANG.addtocart}
-                                        </button>
-                                    {else}
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-primary btn-sm" onclick="addToCart(this, false, 'register')">
-                                                <b class="glyphicon glyphicon-shopping-cart"></b>
-                                                {$LANG.addtocart}
-                                            </button>
-                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle additional-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <b class="caret"></b>
-                                            <span class="sr-only">
-                                                {lang key="domainChecker.additionalPricingOptions" domain=$result.domainName}
-                                            </span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                {foreach $result.pricing as $years => $price}
-                                                    {if $price@iteration eq 1}
-                                                        {* Don't output the first as this is default *}
-                                                        {continue}
-                                                    {/if}
-                                                    <li>
-                                                        <a onclick="addToCart(this, false, 'register', {$years});return false;">
-                                                            {$years} {$LANG.orderyears} @ {$price.register}
-                                                        </a>
-                                                    </li>
-                                                {/foreach}
-                                            </ul>
-                                        </div>
-                                    {/if}
-                                {elseif ($searchingFor == 'transfer' && $result.isRegistered)}
-                                    <button type="button" onclick="addToCart(this, false, 'transfer')" class="btn btn-primary btn-sm">
-                                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                                        {$LANG.addtocart}
-                                    </button>
-                                {elseif $result.isRegistered}
-                                    <a href="http://{$result.domainName}" target="_blank" class="btn btn-default btn-sm">www</a>
-                                    <button type="button" onclick="viewWhois('{$result.domainName}')" class="btn btn-default btn-sm">WHOIS</button>
-                                {/if}
-                            </td>
-                        </tr>
-                    {/foreach}
+                            {elseif ($searchingFor == 'transfer' && $result.isRegistered)}
+                                <button type="button" onclick="addToCart(this, false, 'transfer')" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    {$LANG.addtocart}
+                                </button>
+                            {elseif $result.isRegistered}
+                                <a href="http://{$result.domainName}" target="_blank" class="btn btn-default btn-sm">www</a>
+                                <button type="button" onclick="viewWhois('{$result.domainName}')" class="btn btn-default btn-sm">WHOIS</button>
+                            {/if}
+                        </td>
+                    </tr>
+                {/foreach}
                 </tbody>
             </table>
         </div>
@@ -171,55 +134,18 @@
                 </div>
                 <table class="table table-curved table-hover" id="suggestionResults">
                     <tbody>
-                        {foreach $searchResults.suggestions as $i => $result}
-                            <tr{if $i >= 10} class="hidden"{/if}>
-                                <td>
-                                    <strong>{$result.domainName}</strong>
-                                </td>
-                                <td class="text-center">
-                                    {$result.shortestPeriod.register}
-                                </td>
-                                <td class="text-right">
-                                    {if count($result.pricing) == 1}
-                                        <button type="button" onclick="addToCart(this, true, 'register')" class="btn btn-default btn-sm">
-                                            <span class="glyphicon glyphicon-shopping-cart"></span>
-                                            {$LANG.addtocart}
-                                        </button>
-                                    {else}
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default btn-sm" onclick="addToCart(this, true, 'register')">
-                                                <b class="glyphicon glyphicon-shopping-cart"></b>
-                                                {$LANG.addtocart}
-                                            </button>
-                                            <button type="button" class="btn btn-default btn-sm dropdown-toggle additional-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <b class="caret"></b>
-                                            <span class="sr-only">
-                                                {lang key="domainChecker.additionalPricingOptions" domain=$result.domainName}
-                                            </span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                {foreach $result.pricing as $years => $price}
-                                                    {if $price@iteration eq 1}
-                                                        {* Don't output the first as this is default *}
-                                                        {continue}
-                                                    {/if}
-                                                    <li>
-                                                        <a onclick="addToCart(this, true, 'register', {$years});return false;">
-                                                            {$years} {$LANG.orderyears} @ {$price.register}
-                                                        </a>
-                                                    </li>
-                                                {/foreach}
-                                            </ul>
-                                        </div>
-                                    {/if}
-                                </td>
-                            </tr>
-                        {/foreach}
-                        <tr id="trNoMoreSuggestions" class="hidden">
-                            <td colspan="3" class="text-muted text-center">
-                                {$LANG.domaincheckernomoresuggestions}
+                    {foreach $searchResults.suggestions as $i => $result}
+                        <tr{if $i >= 10} class="hidden"{/if}>
+                            <td>
+                                <strong>{$result.domainName}</strong>
                             </td>
                         </tr>
+                    {/foreach}
+                    <tr id="trNoMoreSuggestions" class="hidden">
+                        <td colspan="3" class="text-muted text-center">
+                            {$LANG.domaincheckernomoresuggestions}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
