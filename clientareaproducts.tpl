@@ -1,16 +1,12 @@
-{include file="$template/includes/tablelist.tpl" tableName="ServicesList" filterColumn="3"}
+{include file="$template/includes/tablelist.tpl" tableName="ServicesList" filterColumn="2"}
 <script type="text/javascript">
     jQuery(document).ready( function ()
     {
         var table = jQuery('#tableServicesList').removeClass('hidden').DataTable();
         {if $orderby == 'product'}
-        table.order([0, '{$sort}'], [3, 'asc']);
-        {elseif $orderby == 'amount' || $orderby == 'billingcycle'}
-        table.order(1, '{$sort}');
-        {elseif $orderby == 'nextduedate'}
-        table.order(2, '{$sort}');
+        table.order([0, '{$sort}'], [1, 'asc']);
         {elseif $orderby == 'domainstatus'}
-        table.order(3, '{$sort}');
+        table.order(1, '{$sort}');
         {/if}
         table.draw();
         jQuery('#tableLoading').addClass('hidden');
