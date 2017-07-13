@@ -169,7 +169,7 @@ var stateNotRequired = true;
         </div>
     </div>
 
-        <div class="form-group text-center">
+        <div class="form-group text-center" style="display: none;">
             <input class="btn btn-primary" type="submit" name="save" value="{$LANG.clientareasavechanges}" />
             <input class="btn btn-default" type="reset" value="{$LANG.cancel}" />
         </div>
