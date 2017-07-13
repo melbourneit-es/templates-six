@@ -47,7 +47,7 @@
 
 <div class="client-home-panels">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
 
             {function name=outputHomePanels}
                 {if $item->getName() eq "Active Products/Services"}
@@ -110,15 +110,13 @@
                 {/if}
             {/foreach}
 
-        </div>
-        <div class="col-sm-6">
-
-            {foreach $panels as $item}
-                {if $item@iteration is even}
-                    {outputHomePanels}
-                {/if}
-            {/foreach}
-
+            <div class="col-sm-6">
+                {foreach $panels as $item}
+                    {if $item@iteration is even}
+                        {outputHomePanels}
+                    {/if}
+                {/foreach}
+            </div>
         </div>
     </div>
 </div>
