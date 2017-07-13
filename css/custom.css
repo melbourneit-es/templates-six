@@ -7,6 +7,16 @@
 
 ***************************************************** */
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+}
+
 .navbar-main {
     background-color: #13a4de;
 }
@@ -46,4 +56,8 @@ section#footer {
 .navbar-main .navbar-nav > .open > a:focus {
     color: #222222;
     background-color: #eee;
+}
+
+.panel-sidebar .panel-title {
+    font-weight: 700;
 }
