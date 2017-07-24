@@ -6,3 +6,58 @@
     defined here.
 
 ***************************************************** */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+}
+
+.navbar-main {
+    background-color: #13a4de;
+}
+
+a.list-group-item.active,
+a.list-group-item.active:hover,
+a.list-group-item.active:focus {
+    background-color: #13a4de;
+    border-color: #13a4de;
+}
+
+.panel-sidebar a.list-group-item.active,
+.panel-sidebar a.list-group-item.active:focus,
+.panel-sidebar a.list-group-item.active:hover {
+    background-color: #13a4de;
+    border-color: #13a4de;
+}
+
+section#footer {
+    border-top: 20px solid #13a4d8;
+}
+
+.navbar-main .dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    text-decoration: none !important;
+    color: #fff !important;
+    background-color: #13A4DE !important;
+}
+
+.navbar-main .navbar-nav > li > a:hover,
+.navbar-main .navbar-nav > li > a:focus,
+.navbar-main .navbar-nav > .active > a,
+.navbar-main .navbar-nav > .active > a:hover,
+.navbar-main .navbar-nav > .active > a:focus,
+.navbar-main .navbar-nav > .open > a,
+.navbar-main .navbar-nav > .open > a:hover,
+.navbar-main .navbar-nav > .open > a:focus {
+    color: #222222;
+    background-color: #eee;
+}
+
+.panel-sidebar .panel-title {
+    font-weight: 700;
+}

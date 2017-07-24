@@ -27,7 +27,6 @@
                             {if $childItem->hasBadge()}<span class="badge">{$childItem->getBadge()}</span>{/if}
                                 {if $childItem->hasIcon()}<i class="{$childItem->getIcon()}"></i>&nbsp;{/if}
                                 {$childItem->getLabel()}
-                                {if $childItem->hasBadge()}&nbsp;<span class="badge">{$childItem->getBadge()}</span>{/if}
                             </a>
                         {/if}
                     {else}
@@ -35,7 +34,6 @@
                             {if $childItem->hasBadge()}<span class="badge">{$childItem->getBadge()}</span>{/if}
                             {if $childItem->hasIcon()}<i class="{$childItem->getIcon()}"></i>&nbsp;{/if}
                             {$childItem->getLabel()}
-                            {if $childItem->hasBadge()}&nbsp;<span class="badge">{$childItem->getBadge()}</span>{/if}
                         </div>
                     {/if}
                 {/foreach}
